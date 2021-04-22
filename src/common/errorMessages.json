@@ -1,0 +1,12 @@
+{
+	"message": {
+		"name": "Ingrese Nombre",
+		"component": "Ingrese componente",
+		"address": "Ingrese domicilio",
+		"city": "Ingrese Ciudad",
+		"rut": {
+			"required": "Debe ingresar Rut",
+			"rutValido": "Rut ingresado no válido"
+		}
+	}
+}
