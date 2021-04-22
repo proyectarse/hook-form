@@ -8,12 +8,14 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "date-fns": "^2.21.1",
     "expo": "~41.0.0",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-hook-form": "^7.2.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
+    "react-native-elements": "^3.4.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {
