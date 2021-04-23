@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {
 	KeyboardAvoidingView,
@@ -11,8 +11,9 @@ import {
 	Keyboard,
 	TextInput,
 } from 'react-native';
-import { Button } from 'react-native-elements';
-import { useForm } from 'react-hook-form';
+import { Button, Switch } from 'react-native-elements';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { useForm, Controller } from 'react-hook-form';
 import { InputText } from '../components';
 
 const FormScreen = () => {
@@ -21,8 +22,12 @@ const FormScreen = () => {
 		handleSubmit,
 		formState: { errors },
 		setValue,
+		watch,
 	} = useForm();
 	const onSubmit = (data) => console.log(data);
+
+	const [date, setDate] = useState(new Date(1598051730000));
+	const [show, setShow] = useState(false);
 
 	useEffect(() => {
 		fetchUser();
@@ -36,6 +41,15 @@ const FormScreen = () => {
 			const { name, email } = await res.json();
 			setValue('name', name);
 		} catch (error) {}
+	};
+
+	const watchSwitch = watch('switchBot');
+
+	const onChange = (event, selectedDate) => {
+		const currentDate = selectedDate || date;
+		setShow(Platform.OS === 'ios');
+		setDate(currentDate);
+		setValue('date', currentDate.toString());
 	};
 
 	return (
@@ -100,6 +114,67 @@ const FormScreen = () => {
 								control={control}
 							/>
 
+							<InputText
+								errors={errors.component2}
+								req={true}
+								defaultValue=""
+								labeltext="Componente2"
+								placeholder="Ingrese Componente2"
+								name="component2"
+								control={control}
+							/>
+
+							<InputText
+								errors={errors.date}
+								req={true}
+								defaultValue=""
+								labeltext="Día"
+								placeholder="Ingrese día"
+								name="date"
+								editable={false}
+								control={control}
+							/>
+
+							<Controller
+								control={control}
+								defaultValue={false}
+								name="switchBot"
+								render={({ field: { onChange, value } }) => (
+									<Switch
+										color="orange"
+										value={value}
+										onValueChange={onChange}
+									/>
+								)}
+							/>
+
+							<Button
+								title="Ingresar fecha"
+								onPress={() => setShow(true)}
+							/>
+
+							{show && (
+								<DateTimePicker
+									testID="dateTimePicker"
+									value={date}
+									mode="date"
+									is24Hour={true}
+									display="default"
+									onChange={onChange}
+								/>
+							)}
+
+							{watchSwitch && (
+								<Text
+									style={{
+										textAlign: 'center',
+										marginBottom: 20,
+									}}
+								>
+									El switch esta activo.
+								</Text>
+							)}
+
 							<Button
 								title="Enviar"
 								type="outline"
@@ -127,6 +202,7 @@ const styles = StyleSheet.create({
 	innerForm: {
 		flex: 1,
 		paddingVertical: 10,
+		paddingBottom: 20,
 	},
 });
 

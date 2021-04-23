@@ -18,6 +18,7 @@ const InputText = (props) => {
 		minLength,
 		maxLength,
 		typeRut,
+		...others
 	} = props;
 
 	const [stateMessage, setStateMessage] = useState('');
@@ -133,6 +134,7 @@ const InputText = (props) => {
 						}
 						errorMessage={stateMessage}
 						disabled={disabled}
+						{...others}
 						{...field}
 						// onChange={(e) => console.log(e.target.value)}
 						// renderErrorMessage={false}

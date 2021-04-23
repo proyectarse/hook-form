@@ -2,8 +2,10 @@
 	"message": {
 		"name": "Ingrese Nombre",
 		"component": "Ingrese componente",
+		"component2": "Ingrese componente",
 		"address": "Ingrese domicilio",
 		"city": "Ingrese Ciudad",
+		"date": "Ingrese Día",
 		"rut": {
 			"required": "Debe ingresar Rut",
 			"rutValido": "Rut ingresado no válido"
