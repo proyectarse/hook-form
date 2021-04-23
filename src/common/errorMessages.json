@@ -6,6 +6,7 @@
 		"address": "Ingrese domicilio",
 		"city": "Ingrese Ciudad",
 		"date": "Ingrese Día",
+		"birth": "Ingrese Fecha Nacimiento",
 		"rut": {
 			"required": "Debe ingresar Rut",
 			"rutValido": "Rut ingresado no válido"

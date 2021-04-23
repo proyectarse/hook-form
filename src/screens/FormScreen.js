@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Button, Switch } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { TextInputMask } from 'react-native-masked-text';
 import { useForm, Controller } from 'react-hook-form';
 import { InputText } from '../components';
 
@@ -28,6 +29,7 @@ const FormScreen = () => {
 
 	const [date, setDate] = useState(new Date(1598051730000));
 	const [show, setShow] = useState(false);
+	const [birthState, setBirthState] = useState();
 
 	useEffect(() => {
 		fetchUser();
@@ -63,9 +65,7 @@ const FormScreen = () => {
 				sequi aliquam quas consequuntur, cumque corporis, vero aut
 				facilis aliquid.
 			</Text>
-			<ScrollView
-				style={{ paddingVertical: 20, backgroundColor: 'white' }}
-			>
+			<ScrollView style={{ backgroundColor: 'white' }}>
 				<KeyboardAvoidingView
 					behavior={Platform.OS === 'ios' ? 'position' : 'padding'}
 					style={styles.container}
@@ -132,6 +132,18 @@ const FormScreen = () => {
 								placeholder="Ingrese día"
 								name="date"
 								editable={false}
+								control={control}
+							/>
+
+							<InputMaskText
+								errors={errors.birth}
+								req={true}
+								defaultValue=""
+								labeltext="Día"
+								placeholder="tu fecha de nacimiento"
+								name="birth"
+								type={'datetime'}
+								options={{ format: 'DD/MM/YYYY' }}
 								control={control}
 							/>
 
@@ -203,6 +215,10 @@ const styles = StyleSheet.create({
 		flex: 1,
 		paddingVertical: 10,
 		paddingBottom: 20,
+	},
+	maskedInputStyle: {
+		fontSize: 15,
+		paddingHorizontal: 10,
 	},
 });
 
