@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text';
 import { validateRut, formatRut } from '../utils';
 import errorMessage from '../common/errorMessages.json';
@@ -95,12 +95,16 @@ const InputMaskText = (props) => {
 
 	return (
 		<View style={styles.inputContainer}>
+			<Text>{labeltext}</Text>
 			<Controller
 				control={control}
 				render={({ field: { onChange, value } }) => (
 					<TextInputMask
 						type={type}
-						style={styles.maskedInputStyle}
+						style={[
+							styles.maskedInputStyle,
+							stateError && styles.errorContainerStyle,
+						]}
 						options={options}
 						disabled={disabled}
 						{...others}
@@ -119,14 +123,24 @@ const InputMaskText = (props) => {
 					validate: validate,
 				}}
 			/>
+			<Text style={styles.errorStyle}>{stateMessage}</Text>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
-	inputContainer: {},
+	inputContainer: {
+		paddingHorizontal: 10,
+	},
 	errorStyle: {
 		color: 'red',
+		fontSize: 12,
+	},
+	maskedInputStyle: {
+		paddingVertical: 8,
+		borderBottomWidth: 1,
+		borderBottomColor: 'grey',
+		fontSize: 18,
 	},
 	errorContainerStyle: {
 		borderBottomColor: 'red',

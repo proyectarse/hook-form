@@ -13,9 +13,8 @@ import {
 } from 'react-native';
 import { Button, Switch } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { TextInputMask } from 'react-native-masked-text';
 import { useForm, Controller } from 'react-hook-form';
-import { InputText } from '../components';
+import { InputText, InputMaskText } from '../components';
 
 const FormScreen = () => {
 	const {
@@ -139,7 +138,7 @@ const FormScreen = () => {
 								errors={errors.birth}
 								req={true}
 								defaultValue=""
-								labeltext="Día"
+								labeltext="Nacimiento"
 								placeholder="tu fecha de nacimiento"
 								name="birth"
 								type={'datetime'}
