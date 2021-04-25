@@ -15,6 +15,7 @@ import { Button, Switch } from 'react-native-elements';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useForm, Controller } from 'react-hook-form';
 import { InputText, InputMaskText } from '../components';
+import { birthConvert } from '../utils';
 
 const FormScreen = () => {
 	const {
@@ -26,7 +27,7 @@ const FormScreen = () => {
 	} = useForm();
 	const onSubmit = (data) => console.log(data);
 
-	const [date, setDate] = useState(new Date(1598051730000));
+	const [date, setDate] = useState(new Date(Date.now()));
 	const [show, setShow] = useState(false);
 	const [birthState, setBirthState] = useState();
 
@@ -45,33 +46,42 @@ const FormScreen = () => {
 	};
 
 	const watchSwitch = watch('switchBot');
+	// const watchDate = watch('date');
 
 	const onChange = (event, selectedDate) => {
 		const currentDate = selectedDate || date;
 		setShow(Platform.OS === 'ios');
-		setDate(currentDate);
-		setValue('date', currentDate.toString());
+		setDate(selectedDate ? currentDate : new Date(Date.now()));
+		setValue('date', selectedDate ? birthConvert(currentDate) : '');
 	};
 
+	// console.log(watchDate, '<---');
+
 	return (
-		<View style={styles.screenContainerStyle}>
-			<StatusBar style="auto" />
-			<Text style={{ marginBottom: 20 }}>
-				Hola Mundo Lorem ipsum dolor sit amet consectetur adipisicing
-				elit. Cumque, natus. Cupiditate molestiae ipsum quidem nostrum
-				praesentium placeat temporatus. Cupiditate molestiae ipsum
-				quidem nostrum praesentium placeat temporibus quis voluptates,
-				sequi aliquam quas consequuntur, cumque corporis, vero aut
-				facilis aliquid.
-			</Text>
-			<ScrollView style={{ backgroundColor: 'white' }}>
-				<KeyboardAvoidingView
-					behavior={Platform.OS === 'ios' ? 'position' : 'padding'}
-					style={styles.container}
-					keyboardVerticalOffset={30}
+		<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			style={styles.container}
+			keyboardVerticalOffset={0}
+		>
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+				<ScrollView
+					style={{
+						backgroundColor: 'white',
+						flex: 1,
+						paddingVertical: 20,
+					}}
 				>
-					<TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-						<View style={styles.innerForm}>
+					<StatusBar style="auto" />
+					<Text style={{ marginBottom: 20 }}>
+						Hola Mundo Lorem ipsum dolor sit amet consectetur
+						adipisicing elit. Cumque, natus. Cupiditate molestiae
+						ipsum quidem nostrum praesentium placeat temporatus.
+						Cupiditate molestiae ipsum quidem nostrum praesentium
+						placeat temporibus quis voluptates, sequi aliquam quas
+						consequuntur, cumque corporis, vero aut facilis aliquid.
+					</Text>
+					<View style={styles.innerForm}>
+						<>
 							<InputText
 								errors={errors.name}
 								req={true}
@@ -94,12 +104,23 @@ const FormScreen = () => {
 
 							<InputText
 								errors={errors.rut}
-								req={false}
+								req={true}
 								defaultValue=""
 								labeltext="Rut"
 								placeholder="Ingrese rut"
 								name="rut"
 								typeRut={true}
+								control={control}
+							/>
+
+							<InputText
+								errors={errors.date}
+								req={true}
+								defaultValue=""
+								labeltext="Día"
+								placeholder="Ingrese día"
+								name="date"
+								editable={false}
 								control={control}
 							/>
 
@@ -120,17 +141,6 @@ const FormScreen = () => {
 								labeltext="Componente2"
 								placeholder="Ingrese Componente2"
 								name="component2"
-								control={control}
-							/>
-
-							<InputText
-								errors={errors.date}
-								req={true}
-								defaultValue=""
-								labeltext="Día"
-								placeholder="Ingrese día"
-								name="date"
-								editable={false}
 								control={control}
 							/>
 
@@ -191,18 +201,17 @@ const FormScreen = () => {
 								type="outline"
 								onPress={handleSubmit(onSubmit)}
 							/>
-						</View>
-					</TouchableWithoutFeedback>
-				</KeyboardAvoidingView>
-			</ScrollView>
-		</View>
+						</>
+					</View>
+				</ScrollView>
+			</TouchableWithoutFeedback>
+		</KeyboardAvoidingView>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		paddingHorizontal: 10,
 	},
 	screenContainerStyle: {
 		paddingHorizontal: 10,
@@ -212,8 +221,8 @@ const styles = StyleSheet.create({
 	},
 	innerForm: {
 		flex: 1,
-		paddingVertical: 10,
-		paddingBottom: 20,
+		paddingHorizontal: 10,
+		marginBottom: 30,
 	},
 	maskedInputStyle: {
 		fontSize: 15,
