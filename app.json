@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Gestión de Formulario con Hook Form",
+    "githubUrl": "https://github.com/proyectarse/hook-form"
   }
 }
